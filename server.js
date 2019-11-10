@@ -5,6 +5,12 @@ const app = express();
 const connectDB = require('./config/db');
 
 
+//int middleware to use the body parser
+app.use(express.json({
+    extended: false
+}  
+));
+
 //connects with the mongoDB Database
 connectDB();
 //checking if the app is starting and running
@@ -15,10 +21,10 @@ app.get('/', (req,res)=> {
 
 
 //defining all the routes  that we made on routes/api/..
-app.use('api/user', require('./routes/api/user'));
-app.use('api/posts', require('./routes/api/posts'));
-app.use('api/profile', require('./routes/api/profile'));
-app.use('api/auth', require('./routes/api/auth'));
+app.use('/api/user', require('./routes/api/user'));
+app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 
 //selecting and proving the port for the run time
