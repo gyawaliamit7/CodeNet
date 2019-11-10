@@ -2,6 +2,11 @@
 const express = require('express');
 const app = express();
 
+//bringing database connection from config/db.js
+const connectDB = require('./config/db');
+
+//connects with the mongoDB Database
+connectDB();
 //checking if the app is starting and running
 app.get('/', (req,res)=> {
     //sendinng the respose 
