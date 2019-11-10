@@ -1,9 +1,9 @@
 
 const express = require('express');
 const app = express();
-
 //bringing database connection from config/db.js
 const connectDB = require('./config/db');
+
 
 //connects with the mongoDB Database
 connectDB();
@@ -12,6 +12,14 @@ app.get('/', (req,res)=> {
     //sendinng the respose 
     res.send('Api is started and running!');
 })
+
+
+//defining all the routes  that we made on routes/api/..
+app.use('api/user', require('./routes/api/user'));
+app.use('api/posts', require('./routes/api/posts'));
+app.use('api/profile', require('./routes/api/profile'));
+app.use('api/auth', require('./routes/api/auth'));
+
 
 //selecting and proving the port for the run time
 const PORT = process.env.PORT || 5000;
