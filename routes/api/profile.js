@@ -120,4 +120,23 @@ async (req, res) => {
 }
 );
 
+//@route GET api/profile/
+//@desc  Getting all user profile
+//@access public
+
+router.get ('/', async (req, res) => {
+    try {
+        //geting profiles from MongoDB
+        const profiles = await Profile.find().populate(
+            'user',
+            ['name', 'avatar']
+        );
+
+        res.json(profiles);    
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+})
+
 module.exports = router;
