@@ -3,7 +3,7 @@ const request = require ('request');
 const config = require ('config');
 const auth = require ('../../middleware/auth');
 const router = express.Router();
-const { check, validationResult } = require('express-validator/check');
+const { check, validationResult } = require('express-validator');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
@@ -166,5 +166,34 @@ router.get('/user/:user_id', async (req, res) => {
         
     }
 });
+
+// @route    DELETE api/profile
+// @desc     Deletes profile ,user and post
+// @access   Private
+
+router.delete('/', auth, async (req, res) => {
+    try {
+        //removing post is yet to be implemented
+
+        //removing profile 
+        await Profile.findOneAndRemove({
+            user: req.user.id
+        });
+
+        //removing user 
+        await User.findOneAndRemove({
+            _id: req.user.id
+        });
+
+        res.json({
+            msg: 'User Deleted'
+        });
+
+        
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');        
+    }
+})
 
 module.exports = router;
