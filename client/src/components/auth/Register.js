@@ -1,4 +1,6 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
  const Register = () => {
    //initializing useState
@@ -17,14 +19,38 @@ import React, { Fragment, useState } from 'react'
    });
 
    //when the submit button is clicked 
-   const onSubmit = e => {
+   const onSubmit = async e => {
      e.preventDefault();
      if (password !== confirmPassword) {
        console.log('Password donot match');
      }
      else {
-       console.log (formData);
-     }
+       //creating object of user
+       const newUser = {
+         name,
+         email,
+         password,
+       };       
+       try {
+        //creating header
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+
+        //creating json 
+        const body = JSON.stringify(newUser);
+        //sending data to backend
+        const res = await axios.post('/api/user',body, config);
+        //return back data i.e token 
+        console.log(res.data);
+         
+       } catch (error) {
+        console.error(error.response.data);
+         
+       }
+     } 
    }
 
     return (
@@ -68,7 +94,7 @@ import React, { Fragment, useState } from 'react'
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Already have an account? <a href="login.html">Sign In</a>
+        Already have an account? <Link to="/login">Sign In</Link>
       </p>
     </Fragment>
     )
