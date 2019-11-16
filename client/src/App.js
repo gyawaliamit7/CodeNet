@@ -6,8 +6,13 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
+//redux 
+import { Provider} from 'react-redux';
+import store from './store';
+
 function App() {
   return (
+    <Provider store = {store}>
     <Router>
       <Fragment>
         <Navbar className></Navbar>
@@ -18,15 +23,11 @@ function App() {
             </Switch>
             <Switch>
                <Route exact path = '/register' component = {Register} />
-            </Switch>
-             
-              
+            </Switch>          
           </section>
-         
-
     </Fragment>     
     </Router>
-    
+    </Provider> 
   );
 }
 
